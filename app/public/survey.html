@@ -181,6 +181,10 @@
                 console.log("====data newfriend====");
                 console.log(data);
                 console.log(data.name);
+                // $(".modal-content").display();
+                $('#results-modal').modal('show');
+                $("#matchName").text(data.name);
+                $("#matchImg").attr("src", data.photo);
 
                 // Clear the form when submitting
                 $("#name").val("");
