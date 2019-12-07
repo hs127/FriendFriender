@@ -98,6 +98,26 @@
         </div>
     </div>
 
+    <div id="results-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                </div>
+                <div class="modal-body">
+                    <h2 id="matchName"></h2>
+                    <img id="matchImg" src="" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 
 </html>
@@ -111,52 +131,75 @@
     $(".submit").on("click", function (event) {
         event.preventDefault();
 
-        //friendsArray.scores.push()
-        // Here we grab the form elements
-        var newFriend = {
-            name: $("#name").val().trim(),
-            photo: $("#role").val().trim(),
-            scores: [
-                $("#q1").val(),
-                $("#q2").val(),
-                $("#q3").val()
-                // $("#q4").val(),
-                // $("#q5").val(),
-                // $("#q6").val(),
-                // $("#q7").val(),
-                // $("#q8").val(),
-                // $("#q9").val(),
-                // $("#q10").val()
-            ]
+        function validateForm() {
+            var isValid = true;
+            $(".form-control").each(function () {
+                if ($(this).val() === "") {
+                    isValid = false;
+                }
+            });
 
-        };
+            $(".custom-select").each(function () {
 
-        // console.log(newFriend);
+                if ($(this).val() === "") {
+                    isValid = false;
+                }
+            });
+            return isValid;
+        }
 
-        // This line is the magic. It"s very similar to the standard ajax function we used.
-        // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-        // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-        // depending on if a tables is available or not.
+        if (validateForm()) {
 
-        $.post("/api/friends", newFriend, function (data) {
-            console.log("====data newfriend====");
-            console.log(data);
+            //friendsArray.scores.push()
+            // Here we grab the form elements
+            var newFriend = {
+                name: $("#name").val().trim(),
+                photo: $("#role").val().trim(),
+                scores: [
+                    $("#q1").val(),
+                    $("#q2").val(),
+                    $("#q3").val()
+                    // $("#q4").val(),
+                    // $("#q5").val(),
+                    // $("#q6").val(),
+                    // $("#q7").val(),
+                    // $("#q8").val(),
+                    // $("#q9").val(),
+                    // $("#q10").val()
+                ]
 
-            // Clear the form when submitting
-            $("#name").val("");
-            $("#role").val("");
-            $("#q1").val("");
-            $("#q2").val("");
-            $("#q3").val("");
-            // $("#q4").val("");
-            // $("#q5").val("");
-            // $("#q6").val("");
-            // $("#q7").val("");
-            // $("#q8").val("");
-            // $("#q9").val("");
-            // $("#q10").val("");
+            };
 
-        });
+            // console.log(newFriend);
+
+            // This line is the magic. It"s very similar to the standard ajax function we used.
+            // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
+            // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
+            // depending on if a tables is available or not.
+
+            $.post("/api/friends", newFriend, function (data) {
+                console.log("====data newfriend====");
+                console.log(data);
+                console.log(data.name);
+
+                // Clear the form when submitting
+                $("#name").val("");
+                $("#role").val("");
+                $("#q1").val("");
+                $("#q2").val("");
+                $("#q3").val("");
+                // $("#q4").val("");
+                // $("#q5").val("");
+                // $("#q6").val("");
+                // $("#q7").val("");
+                // $("#q8").val("");
+                // $("#q9").val("");
+                // $("#q10").val("");
+
+            });
+        } else {
+            alert("Please fill out all fields");
+        }
 
     });
 
